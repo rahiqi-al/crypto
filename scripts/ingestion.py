@@ -15,7 +15,6 @@ def fetch(ti):
         
         data = response.json()
         ti.xcom_push(key='raw_data', value=data)
-        print('hello')
 
     except Exception as e :
         print(f'error{e}')
