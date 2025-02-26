@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import sys
 import json
 
@@ -8,28 +7,30 @@ for line in sys.stdin:
         continue
 
     try:
-        record = json.loads(line)
+        records = json.loads(line)  
+        if not isinstance(records, list):  # ensuring records is a list
+            continue
     except json.JSONDecodeError:
         continue
 
-    coin_id = record.get('id')
-    current_price = record.get('current_price')
-    volume = record.get('total_volume')
+    for record in records:  
+        if not isinstance(record, dict):  # ensuring records is a dictionnary
+            continue
 
-    # Vérifications basiques
-    if not coin_id or current_price is None or volume is None:
-        continue
+        coin_id = record.get('id')
+        current_price = record.get('current_price')
+        volume = record.get('total_volume')
 
-    try:
-        price_float = float(current_price)
-        volume_float = float(volume)
-    except ValueError:
-        continue
+        # making shure evrething is ok
+        if not coin_id or current_price is None or volume is None:
+            continue
 
-    # On prépare la somme des prix et la somme des carrés de prix
-    price_squared = price_float * price_float
+        try:
+            price_float = float(current_price)
+            volume_float = float(volume)
+        except ValueError:
+            continue
 
-    # Format = "sumPrice=..., sumPriceSq=..., volume=..., count=1"
-    # On stocke tout sur une seule ligne séparée par des virgules
-    print(f"{coin_id}\t{price_float},{price_squared},{volume_float},1")
+        price_squared = price_float * price_float
 
+        print(f"{coin_id}\t{price_float},{price_squared},{volume_float},1")

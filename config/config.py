@@ -11,15 +11,17 @@ class config:
 
     url = config_data['INGESTION']['URL']
     params = config_data['INGESTION']['PARAMS']
+    symbols = config_data['INGESTION']['SYMBOLS']
+    
 
 
 
-    api_key =os.getenv('')
+    api_key =os.getenv('API_KEY')
 
 
 
 config=config()
 
 
-#print(config.params)
+#print(config.symbols)
 

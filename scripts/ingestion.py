@@ -5,37 +5,46 @@ from config.config import config
 import json
 import subprocess
 from hdfs import InsecureClient
+import yfinance as yf
+from datetime import datetime
 
+def fetch():
 
-def fetch(ti):
-    try:
-        response = requests.get(config.url,params=config.params)
-        if response.status_code != 200 :
-            raise ValueError(f'ingestion of data failed duo :{response.status_code}')
-        
-        data = response.json()
-        ti.xcom_push(key='raw_data', value=data)
+    crypto_data = []
 
-    except Exception as e :
-        print(f'error{e}')
+    for symbol in config.symbols:
+        ticker = yf.Ticker(f"{symbol}-USD")
+        history = ticker.history(period="1d", interval="1h")  
 
+        if history.empty:
+            continue
 
-def ingestion(ti):
-    data = ti.xcom_pull(key='raw_data')
-    print(data)
-    json_data = json.dumps(data)
+        for _, row in history.iterrows():
+            record = {
+                "id": symbol.lower(),
+                "current_price": row["Close"],
+                "total_volume": row["Volume"]
+            }
+            crypto_data.append(record)
 
+    if not crypto_data:
+        print("something went wrong in fetching data")
+        return
+
+    # Save data locally
     local_file = '/tmp/coingecko_raw.json'
     with open(local_file, 'w') as f:
-        f.write(json_data)
+        json.dump(crypto_data, f)
 
-    execution_date = ti.execution_date.strftime('%Y-%m-%d') 
+    # Upload to HDFS
+    execution_date = datetime.now().strftime('%Y-%m-%d')
     year, month, day = execution_date.split('-')
     hdfs_dir = f"/user/etudiant/crypto/raw/YYYY={year}/MM={month}/DD={day}"
     hdfs_file_path = f"{hdfs_dir}/coingecko_raw.json"
 
     subprocess.run(["hdfs", "dfs", "-mkdir", "-p", hdfs_dir])
     subprocess.run(["hdfs", "dfs", "-put", "-f", local_file, hdfs_file_path])
+    
 
 
 
