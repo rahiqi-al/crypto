@@ -62,6 +62,3 @@ def load(ds):
         except:
             pass
 
-# Run the function
-if __name__ == "__main__":
-    load('2025-02-27')
