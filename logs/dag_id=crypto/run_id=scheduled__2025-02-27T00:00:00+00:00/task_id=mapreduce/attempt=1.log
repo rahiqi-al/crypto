@@ -1,0 +1,285 @@
+[2025-02-28T09:50:06.128+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-02-28T09:50:06.137+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [queued]>
+[2025-02-28T09:50:06.141+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [queued]>
+[2025-02-28T09:50:06.142+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 1
+[2025-02-28T09:50:06.150+0000] {taskinstance.py:2890} INFO - Executing <Task(BashOperator): mapreduce> on 2025-02-27 00:00:00+00:00
+[2025-02-28T09:50:06.153+0000] {standard_task_runner.py:72} INFO - Started process 183831 to run task
+[2025-02-28T09:50:06.155+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'crypto', 'mapreduce', 'scheduled__2025-02-27T00:00:00+00:00', '--job-id', '102', '--raw', '--subdir', 'DAGS_FOLDER/crypto_dag.py', '--cfg-path', '/tmp/tmpflxu2ewp']
+[2025-02-28T09:50:06.156+0000] {standard_task_runner.py:105} INFO - Job 102: Subtask mapreduce
+[2025-02-28T09:50:06.176+0000] {task_command.py:467} INFO - Running <TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [running]> on host ali-ThinkBook-14-G2-ITL
+[2025-02-28T09:50:06.212+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ali rahiqi' AIRFLOW_CTX_DAG_ID='crypto' AIRFLOW_CTX_TASK_ID='mapreduce' AIRFLOW_CTX_EXECUTION_DATE='2025-02-27T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-02-27T00:00:00+00:00'
+[2025-02-28T09:50:06.213+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-02-28T09:50:06.220+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2025-02-28T09:50:06.220+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', 'hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.num.map.tasks=1 -input /user/etudiant/crypto/raw/YYYY=2025/MM=02/DD=27/coingecko_raw.json -output /user/etudiant/crypto/processed/YYYY=2025/MM=02/DD=27 -mapper "/usr/bin/env python3 /home/ali/Desktop/crypto/scripts/mapper.py" -reducer "/usr/bin/env python3 /home/ali/Desktop/crypto/scripts/reducer.py" -file /home/ali/Desktop/crypto/scripts/mapper.py -file /home/ali/Desktop/crypto/scripts/reducer.py']
+[2025-02-28T09:50:06.226+0000] {subprocess.py:99} INFO - Output:
+[2025-02-28T09:50:06.644+0000] {subprocess.py:106} INFO - 2025-02-28 09:50:06,644 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
+[2025-02-28T09:50:07.196+0000] {subprocess.py:106} INFO - packageJobJar: [/home/ali/Desktop/crypto/scripts/mapper.py, /home/ali/Desktop/crypto/scripts/reducer.py, /tmp/hadoop-unjar17745128280537339218/] [] /tmp/streamjob13881687673194877206.jar tmpDir=null
+[2025-02-28T09:50:07.275+0000] {subprocess.py:106} INFO - 2025-02-28 09:50:07,275 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+[2025-02-28T09:50:07.387+0000] {subprocess.py:106} INFO - 2025-02-28 09:50:07,387 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+[2025-02-28T09:50:07.443+0000] {subprocess.py:106} INFO - 2025-02-28 09:50:07,443 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://localhost:9000/user/etudiant/crypto/processed/YYYY=2025/MM=02/DD=27 already exists
+[2025-02-28T09:50:07.443+0000] {subprocess.py:106} INFO - Streaming Command Failed!
+[2025-02-28T09:50:07.793+0000] {subprocess.py:110} INFO - Command exited with return code 5
+[2025-02-28T09:50:07.802+0000] {taskinstance.py:3313} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/operators/bash.py", line 276, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 5.
+[2025-02-28T09:50:07.807+0000] {taskinstance.py:1226} INFO - Marking task as FAILED. dag_id=crypto, task_id=mapreduce, run_id=scheduled__2025-02-27T00:00:00+00:00, execution_date=20250227T000000, start_date=20250228T095006, end_date=20250228T095007
+[2025-02-28T09:50:07.821+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-02-28T09:50:07.822+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 102 for task mapreduce (Bash command failed. The command returned a non-zero exit code 5.; 183831)
+Traceback (most recent call last):
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3006, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 274, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3161, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3185, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/operators/bash.py", line 276, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 5.
+[2025-02-28T09:50:07.851+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-02-28T09:50:07.864+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-02-28T09:50:07.868+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
+[2025-02-28T09:55:59.463+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-02-28T09:55:59.472+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [queued]>
+[2025-02-28T09:55:59.476+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [queued]>
+[2025-02-28T09:55:59.476+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 1
+[2025-02-28T09:55:59.485+0000] {taskinstance.py:2890} INFO - Executing <Task(BashOperator): mapreduce> on 2025-02-27 00:00:00+00:00
+[2025-02-28T09:55:59.488+0000] {standard_task_runner.py:72} INFO - Started process 210956 to run task
+[2025-02-28T09:55:59.490+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'crypto', 'mapreduce', 'scheduled__2025-02-27T00:00:00+00:00', '--job-id', '105', '--raw', '--subdir', 'DAGS_FOLDER/crypto_dag.py', '--cfg-path', '/tmp/tmp2q1arbps']
+[2025-02-28T09:55:59.491+0000] {standard_task_runner.py:105} INFO - Job 105: Subtask mapreduce
+[2025-02-28T09:55:59.510+0000] {task_command.py:467} INFO - Running <TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [running]> on host ali-ThinkBook-14-G2-ITL
+[2025-02-28T09:55:59.546+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ali rahiqi' AIRFLOW_CTX_DAG_ID='crypto' AIRFLOW_CTX_TASK_ID='mapreduce' AIRFLOW_CTX_EXECUTION_DATE='2025-02-27T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-02-27T00:00:00+00:00'
+[2025-02-28T09:55:59.547+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-02-28T09:55:59.554+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2025-02-28T09:55:59.554+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', 'hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.num.map.tasks=1 -input /user/etudiant/crypto/raw/YYYY=2025/MM=02/DD=27/coingecko_raw.json -output /user/etudiant/crypto/processed/YYYY=2025/MM=02/DD=27 -mapper "/usr/bin/env python3 /home/ali/Desktop/crypto/scripts/mapper.py" -reducer "/usr/bin/env python3 /home/ali/Desktop/crypto/scripts/reducer.py" -file /home/ali/Desktop/crypto/scripts/mapper.py -file /home/ali/Desktop/crypto/scripts/reducer.py']
+[2025-02-28T09:55:59.560+0000] {subprocess.py:99} INFO - Output:
+[2025-02-28T09:55:59.959+0000] {subprocess.py:106} INFO - 2025-02-28 09:55:59,959 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
+[2025-02-28T09:56:00.515+0000] {subprocess.py:106} INFO - packageJobJar: [/home/ali/Desktop/crypto/scripts/mapper.py, /home/ali/Desktop/crypto/scripts/reducer.py, /tmp/hadoop-unjar13078310702247573715/] [] /tmp/streamjob15002365155156875645.jar tmpDir=null
+[2025-02-28T09:56:00.592+0000] {subprocess.py:106} INFO - 2025-02-28 09:56:00,592 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+[2025-02-28T09:56:00.696+0000] {subprocess.py:106} INFO - 2025-02-28 09:56:00,696 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+[2025-02-28T09:56:00.757+0000] {subprocess.py:106} INFO - 2025-02-28 09:56:00,757 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://localhost:9000/user/etudiant/crypto/processed/YYYY=2025/MM=02/DD=27 already exists
+[2025-02-28T09:56:00.757+0000] {subprocess.py:106} INFO - Streaming Command Failed!
+[2025-02-28T09:56:01.096+0000] {subprocess.py:110} INFO - Command exited with return code 5
+[2025-02-28T09:56:01.101+0000] {taskinstance.py:3313} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/operators/bash.py", line 276, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 5.
+[2025-02-28T09:56:01.103+0000] {taskinstance.py:1226} INFO - Marking task as FAILED. dag_id=crypto, task_id=mapreduce, run_id=scheduled__2025-02-27T00:00:00+00:00, execution_date=20250227T000000, start_date=20250228T095559, end_date=20250228T095601
+[2025-02-28T09:56:01.132+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-02-28T09:56:01.132+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 105 for task mapreduce (Bash command failed. The command returned a non-zero exit code 5.; 210956)
+Traceback (most recent call last):
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3006, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 274, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3161, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3185, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ali/Desktop/crypto/myenv/lib/python3.12/site-packages/airflow/operators/bash.py", line 276, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 5.
+[2025-02-28T09:56:01.146+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-02-28T09:56:01.155+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-02-28T09:56:01.159+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
+[2025-02-28T09:58:07.151+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-02-28T09:58:07.158+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [queued]>
+[2025-02-28T09:58:07.162+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [queued]>
+[2025-02-28T09:58:07.162+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 1
+[2025-02-28T09:58:07.170+0000] {taskinstance.py:2890} INFO - Executing <Task(BashOperator): mapreduce> on 2025-02-27 00:00:00+00:00
+[2025-02-28T09:58:07.173+0000] {standard_task_runner.py:72} INFO - Started process 221617 to run task
+[2025-02-28T09:58:07.175+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'crypto', 'mapreduce', 'scheduled__2025-02-27T00:00:00+00:00', '--job-id', '108', '--raw', '--subdir', 'DAGS_FOLDER/crypto_dag.py', '--cfg-path', '/tmp/tmpbhpab12i']
+[2025-02-28T09:58:07.176+0000] {standard_task_runner.py:105} INFO - Job 108: Subtask mapreduce
+[2025-02-28T09:58:07.195+0000] {task_command.py:467} INFO - Running <TaskInstance: crypto.mapreduce scheduled__2025-02-27T00:00:00+00:00 [running]> on host ali-ThinkBook-14-G2-ITL
+[2025-02-28T09:58:07.231+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ali rahiqi' AIRFLOW_CTX_DAG_ID='crypto' AIRFLOW_CTX_TASK_ID='mapreduce' AIRFLOW_CTX_EXECUTION_DATE='2025-02-27T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-02-27T00:00:00+00:00'
+[2025-02-28T09:58:07.231+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-02-28T09:58:07.238+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2025-02-28T09:58:07.238+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', 'hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.num.map.tasks=1 -input /user/etudiant/crypto/raw/YYYY=2025/MM=02/DD=28/coingecko_raw.json -output /user/etudiant/crypto/processed/YYYY=2025/MM=02/DD=28 -mapper "/usr/bin/env python3 /home/ali/Desktop/crypto/scripts/mapper.py" -reducer "/usr/bin/env python3 /home/ali/Desktop/crypto/scripts/reducer.py" -file /home/ali/Desktop/crypto/scripts/mapper.py -file /home/ali/Desktop/crypto/scripts/reducer.py']
+[2025-02-28T09:58:07.245+0000] {subprocess.py:99} INFO - Output:
+[2025-02-28T09:58:07.618+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:07,617 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
+[2025-02-28T09:58:08.104+0000] {subprocess.py:106} INFO - packageJobJar: [/home/ali/Desktop/crypto/scripts/mapper.py, /home/ali/Desktop/crypto/scripts/reducer.py, /tmp/hadoop-unjar1457140651541651547/] [] /tmp/streamjob12348796890207560478.jar tmpDir=null
+[2025-02-28T09:58:08.193+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,193 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+[2025-02-28T09:58:08.298+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,298 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+[2025-02-28T09:58:08.444+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,444 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/ali/.staging/job_1740735648534_0001
+[2025-02-28T09:58:08.652+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,652 INFO mapred.FileInputFormat: Total input files to process : 1
+[2025-02-28T09:58:08.686+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,686 INFO mapreduce.JobSubmitter: number of splits:2
+[2025-02-28T09:58:08.827+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,827 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1740735648534_0001
+[2025-02-28T09:58:08.827+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,827 INFO mapreduce.JobSubmitter: Executing with tokens: []
+[2025-02-28T09:58:08.940+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,939 INFO conf.Configuration: resource-types.xml not found
+[2025-02-28T09:58:08.940+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:08,940 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+[2025-02-28T09:58:09.253+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:09,253 INFO impl.YarnClientImpl: Submitted application application_1740735648534_0001
+[2025-02-28T09:58:09.314+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:09,314 INFO mapreduce.Job: The url to track the job: http://ali-ThinkBook-14-G2-ITL:8088/proxy/application_1740735648534_0001/
+[2025-02-28T09:58:09.316+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:09,316 INFO mapreduce.Job: Running job: job_1740735648534_0001
+[2025-02-28T09:58:14.406+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:14,405 INFO mapreduce.Job: Job job_1740735648534_0001 running in uber mode : false
+[2025-02-28T09:58:14.407+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:14,407 INFO mapreduce.Job:  map 0% reduce 0%
+[2025-02-28T09:58:18.469+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:18,469 INFO mapreduce.Job:  map 100% reduce 0%
+[2025-02-28T09:58:22.489+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:22,489 INFO mapreduce.Job:  map 100% reduce 100%
+[2025-02-28T09:58:23.501+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:23,500 INFO mapreduce.Job: Job job_1740735648534_0001 completed successfully
+[2025-02-28T09:58:23.561+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:23,561 INFO mapreduce.Job: Counters: 54
+[2025-02-28T09:58:23.561+0000] {subprocess.py:106} INFO - 	File System Counters
+[2025-02-28T09:58:23.561+0000] {subprocess.py:106} INFO - 		FILE: Number of bytes read=13196
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		FILE: Number of bytes written=867537
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		FILE: Number of read operations=0
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		FILE: Number of large read operations=0
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		FILE: Number of write operations=0
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		HDFS: Number of bytes read=27850
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		HDFS: Number of bytes written=2218
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		HDFS: Number of read operations=11
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		HDFS: Number of large read operations=0
+[2025-02-28T09:58:23.562+0000] {subprocess.py:106} INFO - 		HDFS: Number of write operations=2
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 		HDFS: Number of bytes read erasure-coded=0
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 	Job Counters
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 		Launched map tasks=2
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 		Launched reduce tasks=1
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 		Data-local map tasks=2
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 		Total time spent by all maps in occupied slots (ms)=3983
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 		Total time spent by all reduces in occupied slots (ms)=1554
+[2025-02-28T09:58:23.563+0000] {subprocess.py:106} INFO - 		Total time spent by all map tasks (ms)=3983
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 		Total time spent by all reduce tasks (ms)=1554
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 		Total vcore-milliseconds taken by all map tasks=3983
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 		Total vcore-milliseconds taken by all reduce tasks=1554
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 		Total megabyte-milliseconds taken by all map tasks=4078592
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 		Total megabyte-milliseconds taken by all reduce tasks=1591296
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 	Map-Reduce Framework
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 		Map input records=1
+[2025-02-28T09:58:23.564+0000] {subprocess.py:106} INFO - 		Map output records=230
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Map output bytes=12730
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Map output materialized bytes=13202
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Input split bytes=278
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Combine input records=0
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Combine output records=0
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Reduce input groups=23
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Reduce shuffle bytes=13202
+[2025-02-28T09:58:23.565+0000] {subprocess.py:106} INFO - 		Reduce input records=230
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		Reduce output records=23
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		Spilled Records=460
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		Shuffled Maps =2
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		Failed Shuffles=0
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		Merged Map outputs=2
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		GC time elapsed (ms)=35
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		CPU time spent (ms)=1400
+[2025-02-28T09:58:23.566+0000] {subprocess.py:106} INFO - 		Physical memory (bytes) snapshot=909811712
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 		Virtual memory (bytes) snapshot=8252047360
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 		Total committed heap usage (bytes)=786432000
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 		Peak Map Physical memory (bytes)=328683520
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 		Peak Map Virtual memory (bytes)=2749861888
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 		Peak Reduce Physical memory (bytes)=252624896
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 		Peak Reduce Virtual memory (bytes)=2752344064
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 	Shuffle Errors
+[2025-02-28T09:58:23.567+0000] {subprocess.py:106} INFO - 		BAD_ID=0
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 		CONNECTION=0
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 		IO_ERROR=0
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 		WRONG_LENGTH=0
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 		WRONG_MAP=0
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 		WRONG_REDUCE=0
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 	File Input Format Counters
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 		Bytes Read=27572
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 	File Output Format Counters
+[2025-02-28T09:58:23.568+0000] {subprocess.py:106} INFO - 		Bytes Written=2218
+[2025-02-28T09:58:23.569+0000] {subprocess.py:106} INFO - 2025-02-28 09:58:23,561 INFO streaming.StreamJob: Output directory: /user/etudiant/crypto/processed/YYYY=2025/MM=02/DD=28
+[2025-02-28T09:58:23.915+0000] {subprocess.py:110} INFO - Command exited with return code 0
+[2025-02-28T09:58:23.948+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-02-28T09:58:23.949+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=crypto, task_id=mapreduce, run_id=scheduled__2025-02-27T00:00:00+00:00, execution_date=20250227T000000, start_date=20250228T095807, end_date=20250228T095823
+[2025-02-28T09:58:23.988+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-02-28T09:58:24.006+0000] {taskinstance.py:3901} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-02-28T09:58:24.010+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
